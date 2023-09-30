@@ -99,8 +99,7 @@ plt.xlabel('Salary')
 plt.ylabel('Frequency')
 plt.title('Salary Distribution')
 
-plt.tight_layout()  # Ensure proper spacing between subplots
+# space between subplots
+plt.tight_layout()
+# quite obvious - shows the figure
 plt.show()
-
-# Group data by education and calculate average salary
-education_salary = df.groupby('education')['salary'].mean().reset_index()
