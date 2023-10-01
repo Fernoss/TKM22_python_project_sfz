@@ -52,7 +52,7 @@ print("Cross-referencing salary and sat_salary:")
 print(sorted_df[['salary', 'sat_salary']])
 
 
-# FIGURES (everywhere figures...)
+# FIGURES (figures everwhere...)
 # Create a scatter plot for 'salary' vs. 'sat_salary'
 plt.figure(figsize=(8, 6))
 plt.scatter(df['salary'], df['sat_salary'], alpha=0.5, color='purple')
