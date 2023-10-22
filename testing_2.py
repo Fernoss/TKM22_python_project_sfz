@@ -38,6 +38,11 @@ print(df.nlargest(n=10, columns='salary'))
 print("\nTop 10 smallest salaries:")
 print(df.nsmallest(n=10, columns='salary'))
 
+# Slicing to select specific rows
+sliced_salaries = df['salary'][5:15]
+print("\nSliced Salaries:")
+print(sliced_salaries)
+
 # Salary count
 print("Salary count:")
 df1 = pd.crosstab(df['salary'], 'Count')
@@ -96,3 +101,69 @@ plt.xlabel('Sat_salary')
 plt.ylabel('Frequency')
 plt.title('Sat_salary Distribution')
 plt.show()
+
+# Ambitious piechart for salary.
+# Define salary ranges
+salary_ranges = {
+    'Low Salary': (1500, 2250),
+    'Moderate Salary': (2251, 3200),
+    'High Salary': (3201, 10000)
+}
+
+# Create a function to categorize salaries
+
+
+def categorize_salary(salary):
+    for category, (min_salary, max_salary) in salary_ranges.items():
+        if min_salary <= salary <= max_salary:
+            return category
+    return 'Unknown'
+
+
+# Apply the categorization to create a new column 'Salary Category'
+df['Salary Category'] = df['salary'].apply(categorize_salary)
+
+# Count the distribution of employees in each salary range
+salary_distribution = df['Salary Category'].value_counts()
+
+# Create a pie chart to visualize the distribution
+plt.figure(figsize=(8, 6))
+plt.pie(salary_distribution, labels=None, autopct='%1.1f%%', startangle=140)
+
+# Add annotations for salary ranges
+# Create a white circle at the center
+center_circle = plt.Circle((0, 0), 0.70, fc='white')
+fig = plt.gcf()
+fig.gca().add_artist(center_circle)
+
+# Define the positions for annotations
+positions = [(-0.15, -0.45), (1, 0.45), (-1.12, 0.75)]
+
+for i, (category, (min_salary, max_salary)) in enumerate(salary_ranges.items()):
+    plt.annotate(f'{category}\n({min_salary}-{max_salary})',
+                 xy=positions[i],
+                 fontsize=10,
+                 ha='left', va='center')
+
+plt.title('Salary Range Distribution')
+plt.axis('equal')  # For a circle
+
+# Show the pie chart
+plt.show()
+
+
+# KEYWORD ARGUMENTS (EXERCISE 2):
+# "Keyword arguments are a feature in Python that allows you to pass arguments to
+# a function using the parameter names as keywords. This provides clarity and flexibility
+# when calling functions, especially when functions have multiple parameters. It allows
+# you to specify values for specific parameters by name, rather than relying on their
+#  positional order."
+
+# Function with keyword arguments
+# def greet(name, message="Hello"):
+#     print(f"{message}, {name}!")
+
+
+# Using keyword arguments in function call
+# greet(name="Alice", message="Hi")
+# greet(message="Hey", name="Bob")
